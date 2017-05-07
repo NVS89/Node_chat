@@ -8,21 +8,21 @@ var mongoose = require('libs/mongoose'),
 
 var schema = new Schema({
    username:{
-       type:String,
+       type: String,
        unique: true,
-       required:true
+       required: true
    },
     hashedPassword:{
-       type:String,
-       required:true
+       type: String,
+       required: true
     },
     salt:{
-       type:String,
-       required:true
+       type: String,
+       required: true
     },
     creted:{
-       type:Date,
-        default:Date.now
+       type: Date,
+        default: Date.now
     }
 });
 
