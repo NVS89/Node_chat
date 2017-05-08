@@ -45,27 +45,27 @@ function createUsers(callback) {
         var user = new mongoose.models.User(userData);
         user.save(callback);
     },callback);
-   /* async.parallel([
-            function (callback) {
-                var user_1 = new User({username:'Test1',password:'Pass1'});
-                user_1.save(function (err) {
-                    callback(err, user_1);
-                });
-            },
-            function (callback) {
-                var user_2 = new User({username:'Test2',password:'Pass2'});
-                user_2.save(function (err) {
-                    callback(err, user_2);
-                })
-            },
-            function (callback) {
-                var user_3 = new User({username:'Test3',password:'Pass3'});
-                user_3.save(function (err) {
-                    callback(err, user_3);
-                });
-            }],callback);*/
+    /* async.parallel([
+     function (callback) {
+     var user_1 = new User({username:'Test1',password:'Pass1'});
+     user_1.save(function (err) {
+     callback(err, user_1);
+     });
+     },
+     function (callback) {
+     var user_2 = new User({username:'Test2',password:'Pass2'});
+     user_2.save(function (err) {
+     callback(err, user_2);
+     })
+     },
+     function (callback) {
+     var user_3 = new User({username:'Test3',password:'Pass3'});
+     user_3.save(function (err) {
+     callback(err, user_3);
+     });
+     }],callback);*/
 }
 /*
-function closeDB(callback) {
-    mongoose.disconnect(callback);
-}*/
+ function closeDB(callback) {
+ mongoose.disconnect(callback);
+ }*/
