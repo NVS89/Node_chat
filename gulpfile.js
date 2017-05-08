@@ -14,7 +14,7 @@ const debug = require('gulp-debug');
 const imagemin = require('gulp-imagemin');
 
 //modules
-const browserSync = require('browser-sync');
+const browserSync = require('browser-sync').create();
 const path = require('path');
 const del = require('del');
 
@@ -28,7 +28,7 @@ const destTemplates = 'public/templates';
 const images = 'assets/img/**';
 const templates = 'assets/templates/**/*.pug';
 const styles = 'assets/styles/main.styl';
-const scripts = 'assets/scripts/**/*.coffee';
+const scripts = 'assets/s/**/*.coffee';
 
 gulp.task('styles', function () {
     return gulp.src(styles)
@@ -80,7 +80,9 @@ gulp.task('build',gulp.series('clean',
 
 gulp.task('serve',function () {
     browserSync.init({
-        server:'public/templates'
+       // server:'public'
+        proxy: 'http://localhost:3000',
+        port: 3001
     });
     browserSync.watch('public/**/*.*')
         .on('change',browserSync.reload);
