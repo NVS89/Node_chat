@@ -78,7 +78,15 @@ gulp.task('build',gulp.series('clean',
     gulp.parallel('styles','images','scripts','templates'))
 );
 
-//TODO sync and dev deployment
+gulp.task('serve',function () {
+    browserSync.init({
+        server:'public'
+    });
+    browserSync.watch('public/**/*.*')
+        .on('change',browserSync.reload);
+});
 
+gulp.task('dev', gulp.series('build',
+    gulp.parallel('watch','serve')));
 
 
