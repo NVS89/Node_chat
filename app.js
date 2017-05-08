@@ -16,7 +16,9 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, '/public/templates'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
+
+app.use(express.static(path.join(__dirname, '/public/')));
 
 //environments
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,14 +33,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.route('/').get(function (req,res,next) {
-    res.render('index',{
-        title:'Home page',
-        body:'<b>Hello World</b>'
-    });
+    res.render('index');
 });
 //app.use(methodOverride());
 //app.use(session());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 /*/!*Middleware*!/
 app.use(function (req,res,next) {

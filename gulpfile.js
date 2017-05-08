@@ -28,7 +28,7 @@ const destTemplates = 'public/templates';
 const images = 'assets/img/**';
 const templates = 'assets/templates/**/*.pug';
 const styles = 'assets/styles/main.styl';
-const scripts = 'assets/styles/**/*.coffee';
+const scripts = 'assets/scripts/**/*.coffee';
 
 gulp.task('styles', function () {
     return gulp.src(styles)
@@ -64,7 +64,7 @@ gulp.task('templates', function () {
 });
 
 gulp.task('clean', function () {
-    return del();
+    return del(destStyles,destScripts);
 });
 
 gulp.task('watch', function () {
@@ -80,7 +80,7 @@ gulp.task('build',gulp.series('clean',
 
 gulp.task('serve',function () {
     browserSync.init({
-        server:'public'
+        server:'public/templates'
     });
     browserSync.watch('public/**/*.*')
         .on('change',browserSync.reload);
