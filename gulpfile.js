@@ -28,7 +28,7 @@ const destTemplates = 'public/templates';
 const images = 'assets/img/**';
 const templates = 'assets/templates/**/*.pug';
 const styles = 'assets/styles/main.styl';
-const scripts = 'assets/s/**/*.coffee';
+const scripts = 'assets/scripts/**/*.coffee';
 
 gulp.task('styles', function () {
     return gulp.src(styles)
@@ -64,11 +64,11 @@ gulp.task('templates', function () {
 });
 
 gulp.task('clean', function () {
-    return del(destStyles,destScripts);
+    return del([destStyles,destScripts]);
 });
 
 gulp.task('watch', function () {
-    gulp.watch('assets/styles/**/*.styl',gulp.series('styles'));
+    gulp.watch('assets/styles/*.styl',gulp.series('styles'));
     gulp.watch(images,gulp.series('images'));
     gulp.watch(scripts,gulp.series('scripts'));
     gulp.watch(templates,gulp.series('templates'));
