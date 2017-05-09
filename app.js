@@ -33,7 +33,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.route('/').get(function (req,res,next) {
-    res.render('index');
+    res.render('index', {
+        title:'Home page'
+    });
 });
 //app.use(methodOverride());
 //app.use(session());
