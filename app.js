@@ -18,7 +18,7 @@ var app = express();
 app.set('views', path.join(__dirname, '/public/templates'));
 app.set('view engine', 'pug');
 
-app.use(express.static(path.join(__dirname, '/public/')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 //environments
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -33,10 +33,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.route('/').get(function (req,res,next) {
-    res.render('index', {
+    res.sendFile(__dirname +'/public/templates/index.html')
+       /* , {
         title:'Home page'
-    });
+    });*/
 });
+app.get('/page1', function (req, res) {
+    console.log(req.path);
+    res.render(req.path);
+});
+app.get('/page2', function (req, res) {
+    res.render(req.path);
+});
+/*app.route('/').get(function (req,res,next) {
+    res.render('index.html')
+});*/
 //app.use(methodOverride());
 //app.use(session());
 
