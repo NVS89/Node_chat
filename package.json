@@ -20,6 +20,8 @@
     "express": "~4.15.2",
     "express-session": "^1.15.2",
     "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-uglify": "^2.1.2",
     "method-override": "~2.3.8",
     "mongodb": "^2.2.26",
     "mongoose": "^4.9.2",

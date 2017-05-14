@@ -13,6 +13,8 @@ const newer = require('gulp-newer');
 const debug = require('gulp-debug');
 const imagemin = require('gulp-imagemin');
 const concat = require('gulp-concat');
+const ngMin = require('gulp-ngmin');
+const uglify = require('gulp-uglify');
 
 //modules
 const browserSync = require('browser-sync').create();
@@ -22,7 +24,7 @@ const del = require('del');
 //directory path
 const assets = 'assets';
 const public = 'public';
-const destStyles = 'public/stylesheets';
+const destStyles = 'public/styles';
 const destImg = 'public/images';
 const destScripts = 'public/js';
 const destTemplates = 'public/templates';
@@ -36,7 +38,13 @@ const dist = 'public/dist';
 const vendScriptLibs = [
     'vendor/angular/*.js',
     'vendor/angular-ui-router/release/*.js',
-    'vendor/jquery/dist/*.js'
+    'vendor/jquery/dist/*.js',
+    'vendor/bootstrap/dist/js/*.js'
+];
+
+const vendStylesLibs = [
+    'vendor/bootstrap/dist/css/*.css',
+    'vendor/animate.css/*.css'
 ];
 
 gulp.task('styles', function () {
@@ -46,7 +54,6 @@ gulp.task('styles', function () {
         .pipe(sourceMap.write('.'))
         .pipe(gulp.dest(destStyles));
 });
-//TODO: concat castom and vendor css files in public folder and minificate
 
 gulp.task('images',function () {
     return gulp.src(images,{since: gulp.lastRun('images')})
@@ -78,11 +85,29 @@ gulp.task('copy_script', function () {
         .pipe(gulp.dest(destScripts));
 });
 
-gulp.task('concat_script', function () {
+gulp.task('compress_script', function () {
     return gulp.src('public/js/*.js',{since:gulp.lastRun('scripts')})
         .pipe(newer('public/js/*.js'))
         .pipe(debug({title:'scripts_concat'}))
         .pipe(concat('all.js'))
+        .pipe(debug({title:'ng-min'}))
+        .pipe(ngMin())
+        .pipe(debug({title:'uglify'}))
+        .pipe(uglify({mangle:false}))
+        .pipe(gulp.dest(dist));
+});
+
+gulp.task('copy_styles', function () {
+    return gulp.src(vendStylesLibs,{since:gulp.lastRun('styles')})
+        .pipe(debug({title:'vendor_styles_copying'}))
+        .pipe(gulp.dest(destStyles));
+});
+
+gulp.task('concat_styles', function () {
+    return gulp.src('public/styles/*.css',{since:gulp.lastRun('styles')})
+        .pipe(newer('public/styles/*.css'))
+        .pipe(debug({title:'styles_concat'}))
+        .pipe(concat('all.css'))
         .pipe(gulp.dest(dist));
 });
 
@@ -95,12 +120,15 @@ gulp.task('watch', function () {
     gulp.watch(images,gulp.series('images'));
     gulp.watch(scripts,gulp.series('scripts'));
     gulp.watch(templates,gulp.series('templates'));
-    gulp.watch('public/js/*.js',gulp.series('copy_script','concat_script'));
+    gulp.watch('public/js/*.js',gulp.series('copy_script'/*,'compress_script'*/)); // uncomment for compressing js to dist folder
+    gulp.watch('public/js/*.js',gulp.series('copy_styles','concat_styles'));
 });
 
 gulp.task('build',gulp.series('clean',
-    gulp.parallel('styles','images','scripts','templates','copy_script'),
-    'concat_script')
+    gulp.parallel('styles','images','scripts','templates','copy_styles','copy_script')
+    , 'concat_styles'
+    //, 'compress_script' // uncomment for compressing js to dist folder
+    )
 );
 
 gulp.task('serve',function () {

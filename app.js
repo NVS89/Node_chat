@@ -12,6 +12,10 @@ var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+var config = require('config');
+var mongoose = require('libs/mongoose');
+var MongoStore = require('connect-mongo')(session);
+
 var app = express();
 
 // view engine setup
@@ -21,7 +25,7 @@ app.set('view engine', 'pug');
 app.use(express.static(path.join(__dirname, '/public')));
 
 //environments
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 if(app.get('env')=='development'){
     app.use(logger('dev'));
 }else{
@@ -32,19 +36,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.route('/').get(function (req,res,next) {
-    res.sendFile(__dirname +'/public/templates/index.html')
-       /* , {
-        title:'Home page'
-    });*/
+app.use(session({
+    secret: config.get('session:secret'),
+    key: config.get('session:key'),
+    cookie: config.get('session:cookie'),
+    store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+
+app.use(function (req,res, next) {
+   req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
+   res.send("Visits: " + req.session.numberOfVisits);
 });
-app.get('/page1', function (req, res) {
+
+app.route('/').get(function (req,res,next) {
+ res.render('index', {
+     title:'Home page'
+     });
+});
+
+/*app.route('/').get(function (req,res,next) {
+    res.sendFile(__dirname +'/public/templates/index.html')
+
+});*/
+
+/*app.get('/page1', function (req, res) {
     console.log(req.path);
     res.render(req.path);
 });
 app.get('/page2', function (req, res) {
     res.render(req.path);
-});
+});*/
 /*app.route('/').get(function (req,res,next) {
     res.render('index.html')
 });*/
