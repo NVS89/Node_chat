@@ -43,10 +43,10 @@ app.use(session({
     store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-app.use(function (req,res, next) {
+/*app.use(function (req,res, next) {
    req.session.numberOfVisits = req.session.numberOfVisits + 1 || 1;
    res.send("Visits: " + req.session.numberOfVisits);
-});
+});*/
 
 app.route('/').get(function (req,res,next) {
  res.render('index', {

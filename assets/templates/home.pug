@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  p
+    a(ui-sref="page1") page1
+  p
+    a(ui-sref="page2") page2
+  div(ui-view)
+

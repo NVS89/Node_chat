@@ -71,13 +71,14 @@ gulp.task('scripts', function () {
         .pipe(gulp.dest(destScripts));
 });
 
-gulp.task('templates', function () {
+//uncomment for template compiling
+/*gulp.task('templates', function () {
     return gulp.src(templates,{since:gulp.lastRun('templates')})
         .pipe(newer(destTemplates))
         .pipe(debug({title:'templates'}))
         .pipe(pug())
         .pipe(gulp.dest(destTemplates));
-});
+});*/
 
 gulp.task('copy_script', function () {
     return gulp.src(vendScriptLibs,{since:gulp.lastRun('scripts')})
@@ -119,13 +120,13 @@ gulp.task('watch', function () {
     gulp.watch('assets/styles/*.styl',gulp.series('styles'));
     gulp.watch(images,gulp.series('images'));
     gulp.watch(scripts,gulp.series('scripts'));
-    gulp.watch(templates,gulp.series('templates'));
+   // gulp.watch(templates,gulp.series('templates')); //uncomment for template compiling
     gulp.watch('public/js/*.js',gulp.series('copy_script'/*,'compress_script'*/)); // uncomment for compressing js to dist folder
     gulp.watch('public/js/*.js',gulp.series('copy_styles','concat_styles'));
 });
 
 gulp.task('build',gulp.series('clean',
-    gulp.parallel('styles','images','scripts','templates','copy_styles','copy_script')
+    gulp.parallel('styles','images','scripts'/*,'templates'*/,'copy_styles','copy_script') //uncomment for template compiling
     , 'concat_styles'
     //, 'compress_script' // uncomment for compressing js to dist folder
     )
