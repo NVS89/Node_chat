@@ -12,6 +12,7 @@ const sourceMap = require('gulp-sourcemaps');
 const newer = require('gulp-newer');
 const debug = require('gulp-debug');
 const imagemin = require('gulp-imagemin');
+const concat = require('gulp-concat');
 
 //modules
 const browserSync = require('browser-sync').create();
@@ -29,6 +30,14 @@ const images = 'assets/img/**';
 const templates = 'assets/templates/**/*.pug';
 const styles = 'assets/styles/main.styl';
 const scripts = 'assets/scripts/**/*.coffee';
+const dist = 'public/dist';
+
+//vendor libraries
+const vendScriptLibs = [
+    'vendor/angular/*.js',
+    'vendor/angular-ui-router/release/*.js',
+    'vendor/jquery/dist/*.js'
+];
 
 gulp.task('styles', function () {
     return gulp.src(styles)
@@ -63,8 +72,22 @@ gulp.task('templates', function () {
         .pipe(gulp.dest(destTemplates));
 });
 
+gulp.task('copy_script', function () {
+    return gulp.src(vendScriptLibs,{since:gulp.lastRun('scripts')})
+        .pipe(debug({title:'vendor_scripts_copying'}))
+        .pipe(gulp.dest(destScripts));
+});
+
+gulp.task('concat_script', function () {
+    return gulp.src('public/js/*.js',{since:gulp.lastRun('scripts')})
+        .pipe(newer('public/js/*.js'))
+        .pipe(debug({title:'scripts_concat'}))
+        .pipe(concat('all.js'))
+        .pipe(gulp.dest(dist));
+});
+
 gulp.task('clean', function () {
-    return del([destStyles,destScripts]);
+    return del([destStyles,destScripts,dist]);
 });
 
 gulp.task('watch', function () {
@@ -72,10 +95,12 @@ gulp.task('watch', function () {
     gulp.watch(images,gulp.series('images'));
     gulp.watch(scripts,gulp.series('scripts'));
     gulp.watch(templates,gulp.series('templates'));
+    gulp.watch('public/js/*.js',gulp.series('copy_script','concat_script'));
 });
 
 gulp.task('build',gulp.series('clean',
-    gulp.parallel('styles','images','scripts','templates'))
+    gulp.parallel('styles','images','scripts','templates','copy_script'),
+    'concat_script')
 );
 
 gulp.task('serve',function () {
