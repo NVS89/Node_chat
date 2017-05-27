@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('node-chat:server');
-var http = require('http');
-var config = require('config');
-var log = require('../libs/log')(module);
+const app = require('../app');
+const debug = require('debug')('node-chat:server');
+const http = require('http');
+const config = require('config');
+const log = require('../libs/log')(module);
 
 /**
  * Get port from environment and store in Express.

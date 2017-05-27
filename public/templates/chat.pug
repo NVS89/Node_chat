@@ -1,20 +1,6 @@
+extends layout/layout
+block content
+    p.lead Here should be chat
+    p Greatings, #{userId}
 
 
-section.container
-    nav.navbar.navbar-default(role="navigation")
-        ul.nav.navbar
-            li
-                a(href="/") Home page
-        ul.nav.navbar.navbar-right
-            li
-                a(href="/login") Sign-in
-    h1 Sign-in and Registration
-    p Please enter user name and password
-
-    form.form-horizontal.login-form(name="login-form")
-        .form-group
-            label.col-lg-2.control-label(for="input-username") Name
-            .col-lg-10
-                input#input-username.form-control(name='username',type='text',placeholder='Enter your name')
-
-//TODO create logine form

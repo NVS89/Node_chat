@@ -1,28 +1,26 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var connect = require('connect');
-//var errorHandler = require('errorhandler');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-//var methodOverride = require('method-override');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const connect = require('connect');
+//const errorHandler = require('errorhandler');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+//const methodOverride = require('method-override');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+const index = require('./routes/index');
+const users = require('./routes/users');
 
-var config = require('config');
-var mongoose = require('libs/mongoose');
-var MongoStore = require('connect-mongo')(session);
+const config = require('config');
+const mongoose = require('libs/mongoose');
+const MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, '/public/templates'));
 app.set('view engine', 'pug');
-
-app.use(express.static(path.join(__dirname, '/public')));
 
 //environments
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -53,6 +51,14 @@ app.route('/').get(function (req,res,next) {
      title:'Home page'
      });
 });
+
+//app.use(require('middleware/sendHttpError'));
+//app.use(app.router);
+require('routes')(app);
+app.use(express.static(path.join(__dirname, '/public')));
+
+
+
 
 /*app.route('/').get(function (req,res,next) {
     res.sendFile(__dirname +'/public/templates/index.html')
