@@ -1,6 +1,15 @@
 extends layout/layout
 block content
     p.lead Here should be chat
-    p Greatings, #{userId}
-
+    script(src="../../js/socket.io.js")
+    //script(src="../../node_modules/socket.io-client/socket.io.js")
+    script.
+        var socket = io();
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', {my: 'data'});
+        });
+        socket.on('user disconnected', function (data) {
+            console.log('user disconnected');
+        });
 

@@ -39,7 +39,10 @@ const vendScriptLibs = [
     'vendor/angular/*.js',
     'vendor/angular-ui-router/release/*.js',
     'vendor/jquery/dist/*.js',
-    'vendor/bootstrap/dist/js/*.js'
+    'vendor/bootstrap/dist/js/*.js',
+    'vendor/bootstrap/dist/js/*.js',
+    'node_modules/socket.io-client/socket.io.js'
+    //'node_modules/socket.io/node_modules/socket.io-client/dist/socket.io.js'
 ];
 
 const vendStylesLibs = [

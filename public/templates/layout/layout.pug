@@ -12,6 +12,18 @@ html
     script(src='../../js/angular-ui-router.js')
     script(src='../../js/app.js')
 
-  body(ng-app='nodeChat')
-    block content
+  body
+    section.container
+      nav.navbar.navbar-default(role="navigation")
+        ul.nav.navbar.login-nav-left
+          li
+            a(href="/") Home page
+        ul.nav.navbar.navbar-right.login-nav-right
+          li
+            if user
+              a#logout(href="") Logout
+              script(src='../../js/logedSession.js')
+            else
+              a#login(href="/login") Sign-in
+      block content
 

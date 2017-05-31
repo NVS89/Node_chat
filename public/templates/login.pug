@@ -1,27 +1,19 @@
 extends layout/layout
 block content
-    section.container
-        nav.navbar.navbar-default(role="navigation")
-            ul.nav.navbar.login-nav-left
-                li
-                    a(href="/") Home page
-            ul.nav.navbar.navbar-right.login-nav-right
-                li
-                    a(href="/login") Sign-in
-        h1 Sign-in and Registration
-        p Please enter user name and password
+    h1 Sign-in and Registration
+    p Please enter user name and password
 
-        form.form-horizontal.login-form(name="login-form")
-            .form-group
-                label.col-lg-2.control-label(for="input-username") Name
-                .col-lg-10
-                    input#input-username.form-control(name='username',type='text',placeholder='Enter your name')
-            .form-group
-                label.col-lg-2.control-label(for="input-password") Password
-                .col-lg-10
-                    input#input-password.form-control(name='password',type='password',placeholder='Enter your password')
-            .form-group
-                .col-lg-offset-2.col-lg-10
-                    button.btn.btn-primary(type='submit',data-loading-text="Sending...") Sign-in
-        script(src='../js/simpleFormSender.js')
+    form.form-horizontal.login-form(name="login-form")
+        .form-group
+            label.col-lg-2.control-label(for="input-username") Name
+            .col-lg-10
+                input#input-username.form-control(name='username',type='text',placeholder='Enter your name')
+        .form-group
+            label.col-lg-2.control-label(for="input-password") Password
+            .col-lg-10
+                input#input-password.form-control(name='password',type='password',placeholder='Enter your password')
+        .form-group
+            .col-lg-offset-2.col-lg-10
+                button.btn.btn-primary(type='submit',data-loading-text="Sending...") Sign-in
+    script(src='../js/simpleFormSender.js')
 
