@@ -26,5 +26,10 @@ build/Release
 # https://docs.npmjs.com/cli/shrinkwrap#caveats
 node_modules
 
+# Database directory
+db
+
 # Debug log from npm
 npm-debug.log
+
+.gitignore

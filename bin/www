@@ -29,22 +29,7 @@ var server = http.createServer(app);
 
 server.listen(port);
 
-var io = require('socket.io')(server);
-
-io.on('connection', function (socket) {
-    log.info("connected");
-    socket.emit('news', { hello: 'world' });
-    socket.on('my other event', function (data) {
-        log.info(data);
-        console.log(data);
-    });
-    socket.on('disconnect', function () {
-        log.info("disconnected");
-        io.emit('user disconnected');
-    });
-});
-
-
+require('../socket')(server);
 
 server.on('error', onError);
 server.on('listening', onListening);
