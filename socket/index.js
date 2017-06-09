@@ -10,7 +10,6 @@ module.exports = function (server) {
 
     io.on('connection', function (socket) {
         log.info("connected");
-
         socket.on('disconnect', function () {
             log.info("disconnected");
             io.emit('user disconnected');
