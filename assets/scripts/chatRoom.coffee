@@ -1,4 +1,4 @@
-socket = io();
+socket = io()
 if $('#chat form') && $('#chat ul')
   form = $ '#chat form'
   ul = $ '#chat ul'
@@ -6,27 +6,44 @@ if $('#chat form') && $('#chat ul')
   printMessage = (text)->
     $('<li>', {text: text}).appendTo ul
   printStatus = (text, color)->
-    console.log(text)
+    color = color or 'gray'
     $(('<li>'), {text: text,style:'color:'+color+';'}).appendTo ul
   sendMessage = ()->
     text = input.val()
     input.val ''
     socket.emit 'message', text, (data)->
-      printMessage text
+      printMessage "I'am >>" + text
     return false
 
   socket
-  .on 'message', (text)->
-    printMessage text
+  .on 'message', (username,message)->
+    printMessage username + ' >> ' + message
+  .on 'join', (username)->
+    console.log(username);
+    printStatus (username + ' has joined to chat'), 'blue'
+  .on 'leave', (username)->
+    console.log(username);
+    printStatus (username + ' has leave chat'), 'brown'
   .on 'connect',()->
-    printStatus('connected', 'green');
+    printStatus 'Connected', 'green'
     form.on 'submit', sendMessage
     input.prop 'disabled', false
+  .on 'logout', ()->
+    console.log('true')
+    location.href = "/"
   .on 'disconnect',(data) ->
-    printStatus('disconnected', 'red');
+    printStatus 'disconnected', 'red'
     form.off 'submit', sendMessage
     input.prop 'disabled', true
   .on 'user disconnected',(data) ->
-    printStatus('user disconnected', 'grey');
+    printStatus 'User disconnected', 'grey'
+  .on 'error', (reason)->
+    if reason is "handshake unauthorized"
+      printStatus("You are leave chat");
+
+
+
+
+
 
 

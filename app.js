@@ -14,7 +14,7 @@ const users = require('./routes/users');
 
 const config = require('config');
 const mongoose = require('libs/mongoose');
-const MongoStore = require('connect-mongo')(session);
+const sessionStore = require('libs/sessionStore');
 
 var app = express();
 
@@ -38,7 +38,7 @@ app.use(session({
     secret: config.get('session:secret'),
     key: config.get('session:key'),
     cookie: config.get('session:cookie'),
-    store: new MongoStore({mongooseConnection: mongoose.connection})
+    store: sessionStore
 }));
 app.route('/').get(function (req,res,next) {
     res.render('login');
