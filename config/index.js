@@ -1,5 +1,5 @@
 /**
- * Created by Nick-PC on 03.05.2017.
+ * Created by Nick on 03.05.2017.
  */
 var nconf = require('nconf');
 var path = require('path');
